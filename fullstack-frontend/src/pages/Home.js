@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import { Link } from 'react-router-dom';
 
 export default function Home() {
 
@@ -14,6 +15,11 @@ export default function Home() {
         setUsers(result.data);
     };
 
+    const deleteUser = async (id) => {
+        await axios.delete(`http://localhost:8077/user/${id}`);
+        loadUsers();
+    }
+
     return (
         <div className='container'>
             <div className='py-4'>
@@ -21,6 +27,7 @@ export default function Home() {
                     <thead>
                         <tr>
                             <th scope="col">#</th>
+                            <th scope="col">Id</th>
                             <th scope="col">Name</th>
                             <th scope="col">Username</th>
                             <th scope="col">Email</th>
@@ -32,13 +39,14 @@ export default function Home() {
                             users.map((user, index) => (
                                 <tr>
                                     <th scope="row" key={index}>{index+1}</th>
+                                    <td>{user.id}</td>
                                     <td>{user.name}</td>
                                     <td>{user.username}</td>
                                     <td>{user.email}</td>
                                     <td>
-                                        <button className='btn btn-primary mx-2'>View</button>
-                                        <button className='btn btn-outline-primary mx-2'>Edit</button>
-                                        <button className='btn btn-danger mx-2'>Delete</button>
+                                        <Link className='btn btn-primary mx-2' to={`/viewuser/${user.id}`}>View</Link>
+                                        <Link className='btn btn-outline-primary mx-2' to = {`/edituser/${user.id}`}>Edit</Link>
+                                        <button className='btn btn-danger mx-2' onClick={() => deleteUser(user.id)}>Delete</button>
                                     </td>
                                 </tr>
                             ))
