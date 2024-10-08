@@ -10,14 +10,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 @ControllerAdvice
-public class UserNotFoundAdvice {
+public class NewsNotFoundAdvice {
 
     @ResponseBody
-    @ExceptionHandler(UserNotFoundException.class)
+    @ExceptionHandler(NewsNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public Map<String, String> exceptionHandler(UserNotFoundException userNotFoundException) {
+    public Map<String, String> exceptionHandler(NewsNotFoundException newsNotFoundException) {
         Map<String, String> errorMap = new HashMap<>();
-        errorMap.put("errorMessage", userNotFoundException.getMessage());
+        errorMap.put("errorMessage", newsNotFoundException.getMessage());
 
         return errorMap;
     }

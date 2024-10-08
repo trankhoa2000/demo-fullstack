@@ -4,20 +4,20 @@ import { Link } from 'react-router-dom';
 
 export default function Home() {
 
-    const [users, setUsers] = useState([])
+    const [news, setNews] = useState([])
 
     useEffect(() => {
-        loadUsers();
+        loadNews();
     }, []);
 
-    const loadUsers = async () => {
-        const result = await axios.get("http://localhost:8077/users");
-        setUsers(result.data);
+    const loadNews = async () => {
+        const result = await axios.get("http://localhost:8077/news");
+        setNews(result.data);
     };
 
-    const deleteUser = async (id) => {
-        await axios.delete(`http://localhost:8077/user/${id}`);
-        loadUsers();
+    const deleteNews = async (id) => {
+        await axios.delete(`http://localhost:8077/news/${id}`);
+        loadNews();
     }
 
     return (
@@ -28,25 +28,25 @@ export default function Home() {
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Id</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Username</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Email</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Summary</th>
+                            <th scope="col">Content</th>
+                            <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
-                            users.map((user, index) => (
+                            news.map((n, index) => (
                                 <tr>
                                     <th scope="row" key={index}>{index+1}</th>
-                                    <td>{user.id}</td>
-                                    <td>{user.name}</td>
-                                    <td>{user.username}</td>
-                                    <td>{user.email}</td>
+                                    <td>{n.id}</td>
+                                    <td>{n.title}</td>
+                                    <td>{n.summary}</td>
+                                    <td>{n.content}</td>
                                     <td>
-                                        <Link className='btn btn-primary mx-2' to={`/viewuser/${user.id}`}>View</Link>
-                                        <Link className='btn btn-outline-primary mx-2' to = {`/edituser/${user.id}`}>Edit</Link>
-                                        <button className='btn btn-danger mx-2' onClick={() => deleteUser(user.id)}>Delete</button>
+                                        <Link className='btn btn-primary mx-2' to={`/viewnews/${n.id}`}>View</Link>
+                                        <Link className='btn btn-outline-primary mx-2' to = {`/editnews/${n.id}`}>Edit</Link>
+                                        <button className='btn btn-danger mx-2' onClick={() => deleteNews(n.id)}>Delete</button>
                                     </td>
                                 </tr>
                             ))
